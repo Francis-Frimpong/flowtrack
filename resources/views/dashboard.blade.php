@@ -23,32 +23,12 @@
           <div class="task">
             <div class="task-title">Learn Laravel</div>
             <button
-              class="btn btn-success btn-sm"
-              onclick="startFocus('Learn Laravel')"
+              class="btn btn-success btn-sm" id="startBtn"
             >
               Start
             </button>
           </div>
 
-          <div class="task">
-            <div class="task-title">DSA Practice</div>
-            <button
-              class="btn btn-success btn-sm"
-              onclick="startFocus('DSA Practice')"
-            >
-              Start
-            </button>
-          </div>
-
-          <div class="task">
-            <div class="task-title">Build Portfolio</div>
-            <button
-              class="btn btn-success btn-sm"
-              onclick="startFocus('Build Portfolio')"
-            >
-              Start
-            </button>
-          </div>
         </div>
       </div>
 </x-frame>

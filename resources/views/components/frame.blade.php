@@ -48,7 +48,7 @@
 
       <p class="text-secondary">Stay focused. No distractions.</p>
 
-      <button class="btn btn-danger btn-lg mt-3" onclick="stopFocus()">
+      <button class="btn btn-danger btn-lg mt-3" id="stopBtn">
         Stop Focus
       </button>
     </div>

@@ -2,11 +2,12 @@ import "./bootstrap";
 
 let timer;
 let seconds = 0;
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
 
 /* FOCUS */
-function startFocus(task) {
+startBtn.addEventListener("click", () => {
     document.getElementById("focusMode").style.display = "flex";
-    document.getElementById("taskName").innerText = task;
 
     seconds = 0;
 
@@ -19,10 +20,9 @@ function startFocus(task) {
 
         document.getElementById("timer").innerText = `${h}:${m}:${s}`;
     }, 1000);
-}
+});
 
-function stopFocus() {
+stopBtn.addEventListener("click", () => {
     clearInterval(timer);
     document.getElementById("focusMode").style.display = "none";
-    alert("Session saved ✅ (mock)");
-}
+});
