@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Focus Tracker</title>
+    <title> Flow Track</title>
 
     
     <link
@@ -23,7 +23,7 @@
     <!-- NAV -->
     <nav class="navbar px-3 py-2">
       <div class="container d-flex justify-content-between align-items-center">
-        <div class="brand">🧠 Deep Focus</div>
+        <div class="brand">🧠 FlowTrack</div>
 
         <div class="d-flex gap-2">
           <button  class="btn btn-soft btn-sm ">
