@@ -1,0 +1,83 @@
+body {
+    background: #f5f7ff;
+    font-family: system-ui;
+}
+
+/* NAV */
+.navbar {
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.brand {
+    font-weight: 700;
+}
+
+/* CONTAINER */
+.app {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* CARDS */
+.cardx {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* TASK */
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task-title {
+    font-weight: 500;
+}
+
+/* INSIGHTS */
+.muted {
+    color: #777;
+    font-size: 14px;
+}
+
+/* FOCUS MODE */
+.focus-mode {
+    position: fixed;
+    inset: 0;
+    background: #0b1220;
+    color: white;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    text-align: center;
+}
+
+.timer {
+    font-size: 56px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+/* PAGE CONTROL */
+
+.active {
+    display: block;
+}
+
+.btn-soft {
+    background: #eef2ff;
+    border: none;
+}
