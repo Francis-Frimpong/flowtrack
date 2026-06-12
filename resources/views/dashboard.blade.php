@@ -18,17 +18,25 @@
             </button>
           </div>
         </div>
-
-        <div class="cardx">
-          <div class="task">
-            <div class="task-title">Learn Laravel</div>
-            <button
-              class="btn btn-success btn-sm" id="startBtn"
-            >
-              Start
-            </button>
+        @if ($tasks->isEmpty())
+          <div class="text-center text-muted py-5">
+                <h5>No task has been created.</h5>
           </div>
-
-        </div>
+        @else
+          @foreach ($tasks as $task)
+            
+          <div class="cardx">
+            <div class="task">
+              <div class="task-title">{{$task->task}}</div>
+                <button
+                  class="btn btn-success btn-sm" id="startBtn"
+                >
+                  Start
+                </button>
+            </div>
+  
+          </div>
+          @endforeach
+        @endif
       </div>
 </x-frame>

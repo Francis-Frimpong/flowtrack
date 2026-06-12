@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
     //
     public function index()
     {
-        return view('dashboard');
+        $tasks = Task::all();
+        return view('dashboard', compact('tasks'));
     }
 
     public function insightPage()
