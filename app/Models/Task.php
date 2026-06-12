@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    //
+    protected $fillable = [
+        'title',
+        
+    ];
+
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
 }
