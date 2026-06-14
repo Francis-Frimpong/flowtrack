@@ -18,25 +18,34 @@
             </button>
           </div>
         </div>
-        @if ($tasks->isEmpty())
-          <div class="text-center text-muted py-5">
-                <h5>No task has been created.</h5>
-          </div>
-        @else
+@if ($tasks->isEmpty())
+    <div class="text-center text-muted py-5">
+        <h5>No task has been created.</h5>
+    </div>
+  @else
+      <div id="taskContainer">
+
           @foreach ($tasks as $task)
-            
-          <div class="cardx">
-            <div class="task">
-              <div class="task-title">{{$task->task}}</div>
-                <button
-                  class="btn btn-success btn-sm" id="startBtn"
-                >
-                  Start
-                </button>
-            </div>
-  
-          </div>
+              <div class="cardx">
+                  <div class="task">
+
+                      <div class="task-title">
+                          {{ $task->title }}
+                      </div>
+
+                      <button class="btn btn-success btn-sm startBtn"
+                              data-task-id="{{ $task->id }}">
+                          Start
+                      </button>
+
+                  </div>
+              </div>
+              <br>
           @endforeach
-        @endif
+          
+
+    </div>
+@endif
+
       </div>
 </x-frame>

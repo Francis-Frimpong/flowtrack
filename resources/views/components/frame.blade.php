@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Flow Track</title>
 
@@ -58,8 +59,13 @@
       <div class="modal-dialog">
         <div class="modal-content p-3">
           <h5>Add Task</h5>
-          <input class="form-control mt-2" placeholder="Task name" />
-          <button class="btn btn-primary mt-3">Create</button>
+         <form id="taskForm">
+            <input class="form-control mt-2" placeholder="Task name" id="title" type="text" />
+
+            <button class="btn btn-primary mt-3" type="submit">
+                Create
+            </button>
+        </form>
         </div>
       </div>
     </div>

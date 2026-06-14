@@ -18,4 +18,14 @@ class TaskController extends Controller
     {
         return view('insight');
     }
+
+    public function store(Request $request)
+    {
+         
+        $task = Task::create([
+            'title' => $request->title
+        ]);
+
+        return response()->json($task);
+    }
 }
