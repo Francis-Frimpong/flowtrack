@@ -1,7 +1,5 @@
 import "./bootstrap";
 
-let timer;
-let seconds = 0;
 const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
 const taskForm = document.getElementById("taskForm");
@@ -59,23 +57,85 @@ function addTaskToUI(task) {
     container.insertAdjacentHTML("beforeend", html);
 }
 
-// startBtn.addEventListener("click", () => {
-//     document.getElementById("focusMode").style.display = "flex";
+// Start button
+document.querySelectorAll(".startBtn").forEach((button) => {
+    button.addEventListener("click", async function () {
+        const taskId = this.dataset.taskId;
 
-//     seconds = 0;
+        const response = await fetch("/sessions/start", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]',
+                ).content,
+            },
+            body: JSON.stringify({
+                task_id: taskId,
+            }),
+        });
 
-//     timer = setInterval(() => {
-//         seconds++;
+        const data = await response.json();
 
-//         let h = String(Math.floor(seconds / 3600)).padStart(2, "0");
-//         let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
-//         let s = String(seconds % 60).padStart(2, "0");
+        if (!data.success) {
+            alert(data.message);
+            return;
+        }
 
-//         document.getElementById("timer").innerText = `${h}:${m}:${s}`;
-//     }, 1000);
-// });
+        console.log("Session started:", data.session);
+
+        // 👉 NOW start your timer ONLY after success
+        startTimer();
+    });
+});
+
+// timer function
+
+let seconds = 0;
+let timer = null;
+
+function startTimer() {
+    seconds = 0;
+
+    timer = setInterval(() => {
+        seconds++;
+
+        let h = String(Math.floor(seconds / 3600)).padStart(2, "0");
+        let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+        let s = String(seconds % 60).padStart(2, "0");
+
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        document.getElementById("focusMode").style.display = "flex";
+    }, 1000);
+}
+
+document.getElementById("stopBtn").addEventListener("click", async function () {
+    const response = await fetch("/sessions/stop", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                .content,
+        },
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
+
+    console.log("Session stopped:", data.session);
+
+    // stop timer
+    clearInterval(timer);
+
+    document.getElementById("focusMode").style.display = "none";
+});
 
 // stopBtn.addEventListener("click", () => {
 //     clearInterval(timer);
-//     document.getElementById("focusMode").style.display = "none";
 // });

@@ -18,6 +18,8 @@ class Session extends Model
         'end_time' => 'datetime',
     ];
 
+     protected $table = 'focus_sessions';
+
     public function task()
     {
         return $this->belongsTo(Task::class);
