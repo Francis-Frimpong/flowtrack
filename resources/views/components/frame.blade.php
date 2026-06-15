@@ -43,7 +43,7 @@
 
     <!-- ================= FOCUS MODE ================= -->
     <div class="focus-mode" id="focusMode">
-      <h4 id="taskName">Task</h4>
+      <h4 id="taskName"></h4>
 
       <div class="timer" id="timer">00:00:00</div>
 

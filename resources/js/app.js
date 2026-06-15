@@ -28,12 +28,13 @@ taskForm.addEventListener("submit", async function (e) {
     const data = await response.json();
 
     addTaskToUI(data);
-    document.getElementById("emptyTask").style.display = "none";
+
     bootstrap.Modal.getInstance(document.getElementById("taskModal")).hide();
 
     taskForm.reset();
 });
 
+// Insert task into UI
 function addTaskToUI(task) {
     const container = document.getElementById("taskContainer");
 
@@ -59,9 +60,13 @@ function addTaskToUI(task) {
 }
 
 // Start button
+let activeTask = null;
 document.querySelectorAll(".startBtn").forEach((button) => {
     button.addEventListener("click", async function () {
         const taskId = this.dataset.taskId;
+        activeTask = {
+            title: this.dataset.taskTitle,
+        };
 
         const response = await fetch("/sessions/start", {
             method: "POST",
@@ -84,7 +89,9 @@ document.querySelectorAll(".startBtn").forEach((button) => {
             return;
         }
 
-        console.log("Session started:", data.session);
+        document.getElementById("taskName").innerText = activeTask.title;
+
+        document.getElementById("focusMode").style.display = "flex";
 
         // 👉 NOW start your timer ONLY after success
         startTimer();
@@ -107,10 +114,10 @@ function startTimer() {
         let s = String(seconds % 60).padStart(2, "0");
 
         document.getElementById("timer").innerText = `${h}:${m}:${s}`;
-        document.getElementById("focusMode").style.display = "flex";
     }, 1000);
 }
 
+// stop timer
 document.getElementById("stopBtn").addEventListener("click", async function () {
     const response = await fetch("/sessions/stop", {
         method: "POST",
@@ -136,7 +143,3 @@ document.getElementById("stopBtn").addEventListener("click", async function () {
 
     document.getElementById("focusMode").style.display = "none";
 });
-
-// stopBtn.addEventListener("click", () => {
-//     clearInterval(timer);
-// });
