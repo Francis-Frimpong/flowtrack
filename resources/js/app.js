@@ -6,6 +6,7 @@ const taskForm = document.getElementById("taskForm");
 
 /* FOCUS */
 
+// create task
 taskForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -27,7 +28,7 @@ taskForm.addEventListener("submit", async function (e) {
     const data = await response.json();
 
     addTaskToUI(data);
-
+    document.getElementById("emptyTask").style.display = "none";
     bootstrap.Modal.getInstance(document.getElementById("taskModal")).hide();
 
     taskForm.reset();
