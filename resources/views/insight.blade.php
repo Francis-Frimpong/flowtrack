@@ -13,7 +13,7 @@
 
         <div class="cardx mb-3">
           <p class="muted mb-1">This Week</p>
-          <h4>12h 30m</h4>
+          <h4>{{$hoursPerWeek}}h {{$minutesPerWeek}}m</h4>
         </div>
 
         <div class="cardx">

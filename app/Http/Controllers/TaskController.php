@@ -30,18 +30,30 @@ class TaskController extends Controller
 
     public function insightPage()
     {
-        $totalSeconds = Session::whereDate('start_time', Carbon::today())
+        // total time per day
+        $totalSeconds = Session::whereDate('start_time', Carbon::today(), '', '')
         ->sum('duration_seconds');
 
         $hours = floor($totalSeconds / 3600);
         $minutes = floor(($totalSeconds % 3600) / 60);
 
+        // total titme per week
+        $totalSecondsPerWeek = Session::whereBetween('start_time', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek(),
+        ])->sum('duration_seconds');
+
+        $hoursPerWeek = floor($totalSecondsPerWeek /3600);
+
+        $minutesPerWeek = floor(($totalSecondsPerWeek % 3600) / 60);
+
+        // total time per task
         $tasks = Task::withSum([
         'sessions as today_seconds' => function ($query) {
             $query->whereDate('start_time', today());
         }
         ], 'duration_seconds')->get();
         
-        return view('insight', compact(['hours', 'minutes', 'tasks']));
+        return view('insight', compact(['hours', 'minutes', 'tasks', 'hoursPerWeek', 'minutesPerWeek']));
     }
 }
