@@ -18,7 +18,7 @@ class Session extends Model
         'end_time' => 'datetime',
     ];
 
-     protected $table = 'focus_sessions';
+    protected $table = 'focus_sessions';
 
     public function task()
     {

@@ -19,20 +19,14 @@
         <div class="cardx">
           <p class="muted mb-2">By Task</p>
 
-          <div class="d-flex justify-content-between">
-            <span>Learn Laravel</span>
-            <strong>8h 20m</strong>
-          </div>
+          @foreach ($tasks as $task )
+            <div class="d-flex justify-content-between">
+              <span>{{ $task->title }}</span>
+              <strong>{{floor($task->today_seconds / 3600)}}h {{floor(($task->today_seconds % 3600) / 60)}}m</strong>
+            </div>
+            
+          @endforeach
 
-          <div class="d-flex justify-content-between mt-2">
-            <span>DSA Practice</span>
-            <strong>3h 10m</strong>
-          </div>
-
-          <div class="d-flex justify-content-between mt-2">
-            <span>Portfolio</span>
-            <strong>1h 00m</strong>
-          </div>
         </div>
       </div>
 </x-frame>

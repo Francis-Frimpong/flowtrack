@@ -35,7 +35,13 @@ class TaskController extends Controller
 
         $hours = floor($totalSeconds / 3600);
         $minutes = floor(($totalSeconds % 3600) / 60);
+
+        $tasks = Task::withSum([
+        'sessions as today_seconds' => function ($query) {
+            $query->whereDate('start_time', today());
+        }
+        ], 'duration_seconds')->get();
         
-        return view('insight', compact(['hours', 'minutes']));
+        return view('insight', compact(['hours', 'minutes', 'tasks']));
     }
 }

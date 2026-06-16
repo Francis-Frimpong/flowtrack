@@ -61,41 +61,43 @@ function addTaskToUI(task) {
 
 // Start button
 let activeTask = null;
-document.querySelectorAll(".startBtn").forEach((button) => {
-    button.addEventListener("click", async function () {
-        const taskId = this.dataset.taskId;
-        activeTask = {
-            title: this.dataset.taskTitle,
-        };
 
-        const response = await fetch("/sessions/start", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "X-CSRF-TOKEN": document.querySelector(
-                    'meta[name="csrf-token"]',
-                ).content,
-            },
-            body: JSON.stringify({
-                task_id: taskId,
-            }),
-        });
+document.addEventListener("click", async function (e) {
+    if (!e.target.classList.contains("startBtn")) return;
 
-        const data = await response.json();
+    const button = e.target;
 
-        if (!data.success) {
-            alert(data.message);
-            return;
-        }
+    const taskId = button.dataset.taskId;
 
-        document.getElementById("taskName").innerText = activeTask.title;
+    activeTask = {
+        title: button.dataset.taskTitle,
+    };
 
-        document.getElementById("focusMode").style.display = "flex";
-
-        // 👉 NOW start your timer ONLY after success
-        startTimer();
+    const response = await fetch("/sessions/start", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                .content,
+        },
+        body: JSON.stringify({
+            task_id: taskId,
+        }),
     });
+
+    const data = await response.json();
+
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
+
+    document.getElementById("taskName").innerText = activeTask.title;
+
+    document.getElementById("focusMode").style.display = "flex";
+
+    startTimer();
 });
 
 // timer function
