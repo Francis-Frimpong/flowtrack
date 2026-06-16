@@ -8,7 +8,7 @@
 
         <div class="cardx mb-3">
           <p class="muted mb-1">Today</p>
-          <h3>2h 45m</h3>
+          <h3>{{$hours}}h {{$minutes}}m</h3>
         </div>
 
         <div class="cardx mb-3">

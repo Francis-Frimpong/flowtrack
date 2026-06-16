@@ -56,7 +56,7 @@ public function stop(Request $request)
     $start = Carbon::parse($session->start_time);
     $end = Carbon::parse($session->end_time);
 
-    $session->duration_seconds = $end->diffInSeconds($start);
+    $session->duration_seconds = $start->diffInSeconds($end, false);
 
     // 4. Save
     $session->save();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\Session;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -14,10 +16,7 @@ class TaskController extends Controller
         return view('dashboard', compact('tasks'));
     }
 
-    public function insightPage()
-    {
-        return view('insight');
-    }
+   
 
     public function store(Request $request)
     {
@@ -27,5 +26,16 @@ class TaskController extends Controller
         ]);
 
         return response()->json($task);
+    }
+
+    public function insightPage()
+    {
+        $totalSeconds = Session::whereDate('start_time', Carbon::today())
+        ->sum('duration_seconds');
+
+        $hours = floor($totalSeconds / 3600);
+        $minutes = floor(($totalSeconds % 3600) / 60);
+        
+        return view('insight', compact(['hours', 'minutes']));
     }
 }
