@@ -12,6 +12,10 @@ taskForm.addEventListener("submit", async function (e) {
 
     const titleInput = document.getElementById("title");
 
+    if (!titleInput.value.trim()) {
+        return;
+    }
+
     const response = await fetch("/tasks", {
         method: "POST",
         headers: {
