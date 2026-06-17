@@ -47,7 +47,8 @@ function addTaskToUI(task) {
             </div>
 
             <button class="btn btn-success btn-sm startBtn"
-                    data-task-id="${task.id}">
+                    data-task-id="${task.id}"
+                    data-task-title="${task.title}">
                 Start
             </button>
 
@@ -60,7 +61,6 @@ function addTaskToUI(task) {
 }
 
 // Start button
-let activeTask = null;
 
 document.addEventListener("click", async function (e) {
     if (!e.target.classList.contains("startBtn")) return;
@@ -69,9 +69,7 @@ document.addEventListener("click", async function (e) {
 
     const taskId = button.dataset.taskId;
 
-    activeTask = {
-        title: button.dataset.taskTitle,
-    };
+    const activeTask = button.dataset.taskTitle;
 
     const response = await fetch("/sessions/start", {
         method: "POST",
@@ -93,7 +91,7 @@ document.addEventListener("click", async function (e) {
         return;
     }
 
-    document.getElementById("taskName").innerText = activeTask.title;
+    document.getElementById("taskName").innerText = activeTask;
 
     document.getElementById("focusMode").style.display = "flex";
 
@@ -137,8 +135,6 @@ document.getElementById("stopBtn").addEventListener("click", async function () {
         alert(data.message);
         return;
     }
-
-    console.log("Session stopped:", data.session);
 
     // stop timer
     clearInterval(timer);
