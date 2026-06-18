@@ -64,6 +64,30 @@ function addTaskToUI(task) {
     container.insertAdjacentHTML("beforeend", html);
 }
 
+// timer function
+
+let startTime = null;
+let timerInterval = null;
+
+function updateTimer() {
+    const now = Date.now();
+    const elapsed = Math.floor((now - startTime) / 1000);
+
+    const h = String(Math.floor(elapsed / 3600)).padStart(2, "0");
+    const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
+    const s = String(elapsed % 60).padStart(2, "0");
+
+    document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+}
+
+function startTimer() {
+    // stop old timer if another start button was click.
+    if (timerInterval) clearInterval(timerInterval);
+
+    // count the timer every 1 seconds.
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
 // Start button
 
 document.addEventListener("click", async function (e) {
@@ -90,6 +114,13 @@ document.addEventListener("click", async function (e) {
 
     const data = await response.json();
 
+    startTime = Date.parse(data.session.start_time);
+
+    if (!startTime) {
+        console.error("Invalid start_time:", data.session.start_time);
+        return;
+    }
+
     if (!data.success) {
         alert(data.message);
         return;
@@ -99,27 +130,8 @@ document.addEventListener("click", async function (e) {
 
     document.getElementById("focusMode").style.display = "flex";
 
-    startTimer();
+    startTimer(updateTimer);
 });
-
-// timer function
-
-let seconds = 0;
-let timer = null;
-
-function startTimer() {
-    seconds = 0;
-
-    timer = setInterval(() => {
-        seconds++;
-
-        let h = String(Math.floor(seconds / 3600)).padStart(2, "0");
-        let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
-        let s = String(seconds % 60).padStart(2, "0");
-
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
-    }, 1000);
-}
 
 // stop timer
 document.getElementById("stopBtn").addEventListener("click", async function () {
@@ -141,7 +153,8 @@ document.getElementById("stopBtn").addEventListener("click", async function () {
     }
 
     // stop timer
-    clearInterval(timer);
+    startTime = null;
+    clearInterval(timerInterval);
 
     document.getElementById("focusMode").style.display = "none";
 });
